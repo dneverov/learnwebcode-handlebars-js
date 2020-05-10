@@ -16,7 +16,22 @@ ourRequest.onerror = function() {
 
 ourRequest.send();
 
+Handlebars.registerHelper("calclulateAge", function(birthYear){
+  var age = new Date().getFullYear() - birthYear;
+
+  if (age > 0){
+    age += " years old";
+  } else {
+    age = "Less than a year old";
+  }
+  return age;
+});
+
 function createHTML(petsData){
-  console.log("Result from our function");
-  console.log(petsData);
+  var rawTemplate = document.getElementById("petsTemplate").innerHTML;
+  var compiledTemplate = Handlebars.compile(rawTemplate);
+  var ourGeneratedHTML = compiledTemplate(petsData);
+
+  var petsContainer = document.getElementById("pets-container");
+  petsContainer.innerHTML = ourGeneratedHTML;
 }
